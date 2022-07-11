@@ -48,5 +48,11 @@ const printDiff = async (diff) => {
     });
   });
 
+  t.sort((a, b) => {
+    const aPrice = parseInt(a.Price.substring(1));
+    const bPrice = parseInt(b.Price.substring(1));
+    return bPrice - aPrice;
+  });
+
   console.log(t.toString());
 };
