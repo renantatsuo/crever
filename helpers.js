@@ -4,38 +4,43 @@ export const wait = (ms) => {
   });
 };
 
-export const parseArgs = (args, argv) => {
-  return args.reduce((acc, curr) => {
-    const [value, err] = getArgValue(curr, argv);
+export const parseArgs = (argOptions, processArgs) => {
+  return argOptions.reduce((argMap, currArg) => {
+    const [value, err] = getArgValue(currArg, processArgs);
 
     if (err) {
-      throw new Error(`Invalid argument ${curr.name}: ${value}`);
+      throw new Error(`Invalid argument ${currArg.name}: ${value}`);
     }
 
     if (value) {
       return {
-        ...acc,
-        [curr.name]: value,
+        ...argMap,
+        [currArg.name]: value,
       };
     }
 
-    return acc;
+    return argMap;
   }, {});
 };
 
-function getArgValue(arg, argv) {
-  const id = (() =>
+const getArgValue = (arg, argv) => {
+  if (arg.env) {
+    console.info(`Loading [${arg.name}] from ENV.`);
+    return [arg.env, false];
+  }
+
+  const argIndex = (() =>
     arg.options.map((o) => argv.indexOf(o)).find((v) => v !== -1))();
 
-  if (id === undefined && arg.required) {
+  if (argIndex === undefined && arg.required) {
     return [null, true];
   }
 
-  if (id === undefined) {
-    return [null, false];
+  if (argIndex === undefined && !arg.required) {
+    return [arg.default, false];
   }
 
-  const val = argv[id + 1];
+  const val = argv[argIndex + 1];
 
   if (!val && arg.required) {
     return [null, true];
