@@ -1,5 +1,3 @@
-import("colors");
-
 /**
  * @param {import("diff").ArrayChange[]} diff
  */

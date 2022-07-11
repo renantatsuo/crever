@@ -1,5 +1,5 @@
 {
-  "name": "cleverswag",
+  "name": "crever",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r dotenv/config index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Renan Tatsuo <tatsuorenan@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
