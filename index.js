@@ -20,7 +20,7 @@ const ARGS = parseArgs(
       name: "interval",
       options: ["-i", "--interval"],
       required: false,
-      env: process.env.CHECK_INTERVAL,
+      env: process.env.CHECK_INTERVAL_SECONDS,
       default: 10,
     },
   ],
