@@ -47,4 +47,7 @@ const getArgValue = (arg, argv) => {
   }
 
   return [val, false];
-}
+};
+
+export const compareArrays = (left, right) =>
+  JSON.stringify(left) === JSON.stringify(right);
