@@ -16,7 +16,7 @@ You must provide some information to be able to run:
 |--------------------------|----------------------|------------------------|
 | password                 | `-p` or `--password` | SWAG_PASSWORD          |
 | store url                | `-u` or `--url`      | SWAG_URL               |
-| interval (default is 10) | `-i` or `--interval` | CHECK_INTERVAL_SECONDS |
+| interval (default is 60) | `-i` or `--interval` | CHECK_INTERVAL_SECONDS |
 
 ### using cli arguments
 

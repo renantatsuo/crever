@@ -21,7 +21,7 @@ const ARGS = parseArgs(
       options: ["-i", "--interval"],
       required: false,
       env: process.env.CHECK_INTERVAL_SECONDS,
-      default: 10,
+      default: 60,
     },
   ],
   process.argv.slice(2)
