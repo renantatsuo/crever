@@ -2,6 +2,11 @@ import { load } from "cheerio";
 import fetch from "node-fetch";
 import { wait } from "./helpers.js";
 
+/**
+ * @param {string} password the swag store password
+ * @param {string} storeUrl the swag store url
+ * @returns {Promise<string>} a swag store session cookie
+ */
 export const getCookie = async (password, storeUrl) => {
   console.info("Logging in...");
   const formData = new URLSearchParams();
@@ -19,7 +24,9 @@ export const getCookie = async (password, storeUrl) => {
   });
 
   if (res.status !== 302) {
-    throw Error("Could not authenticate to cleverswag store");
+    throw Error(
+      `Could not authenticate to cleverswag store. Failed with status ${res.status}: ${res.statusText}`
+    );
   }
 
   console.info("Logged in...");
@@ -27,7 +34,12 @@ export const getCookie = async (password, storeUrl) => {
   return res.headers.raw()["set-cookie"].join(";");
 };
 
-export async function getProducts(storeUrl, cookie) {
+/**
+ * @param {string} storeUrl the swag store url
+ * @param {string} cookie the session cookie
+ * @returns {Promise<Product[]>} list of all products available in the store
+ */
+export const getProducts = async (storeUrl, cookie) => {
   const products = [];
 
   for await (const swagProducts of getSwagProducts({ storeUrl, cookie })) {
@@ -35,7 +47,7 @@ export async function getProducts(storeUrl, cookie) {
   }
 
   return products;
-}
+};
 
 async function* getSwagProducts(options) {
   const { page = 1 } = options;
@@ -77,7 +89,7 @@ const fetchSwagPage = async (options) => {
   return data;
 };
 
-function mapElToProduct(e) {
+const mapElToProduct = (e) => {
   const $ = load(e);
   $(".visually-hidden").remove();
 
@@ -85,4 +97,4 @@ function mapElToProduct(e) {
     product: $(".grid-product__title").text(),
     price: $(".grid-product__price").text().trim(),
   };
-}
+};
