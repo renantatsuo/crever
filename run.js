@@ -2,7 +2,7 @@ import * as Diff from "diff";
 import Table from "easy-table";
 import { compareArrays, wait } from "./helpers.js";
 import { getCookie, getProducts } from "./swag.js";
-import("colors");
+import("@colors/colors");
 
 export const run = async (args, onDiff) => {
   const cookie = await getCookie(args.password, args.url);
