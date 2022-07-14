@@ -51,3 +51,16 @@ const getArgValue = (arg, argv) => {
 
 export const compareArrays = (left, right) =>
   JSON.stringify(left) === JSON.stringify(right);
+
+export const waitUser = () => {
+  console.log("\nPress ESC to exit or any key to continue.");
+
+  process.stdin.setRawMode(true);
+  process.stdin.once("data", (data) => {
+    process.stdin.setRawMode(false);
+    const json = data.toJSON();
+    if (json.data?.[0] === 27) {
+      process.exit(0);
+    }
+  });
+};

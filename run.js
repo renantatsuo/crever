@@ -1,6 +1,6 @@
 import * as Diff from "diff";
 import Table from "easy-table";
-import { compareArrays, wait } from "./helpers.js";
+import { compareArrays, wait, waitUser } from "./helpers.js";
 import { getCookie, getProducts } from "./swag.js";
 import("@colors/colors");
 
@@ -19,11 +19,15 @@ export const run = async (args, onDiff) => {
     printDiff(diff);
 
     if (hasDiff(diff)) {
-      try {
-        await onDiff(diff);
-      } catch (e) {
+      onDiff(diff).catch((e) => {
         console.error(`Something got wrong in onDiff callback.`, e);
-      }
+      });
+
+      console.log(`===================================`.rainbow.inverse.bold);
+      console.log(`== THE PRODUCT LIST HAS CHANGED! ==`.bgWhite.black.bold);
+      console.log(`===================================`.rainbow.inverse.bold);
+
+      waitUser();
     }
 
     console.log(`\nLast check: ${new Date().toLocaleTimeString()}\n`);
