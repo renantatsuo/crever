@@ -51,7 +51,7 @@ export const getProducts = async (storeUrl, cookie) => {
 
 async function* getSwagProducts(options) {
   const { page = 1 } = options;
-  const pageHtml = await fetchSwagPage(options);
+  const pageHtml = await fetchSwagPage({ page, ...options });
   const $ = load(pageHtml);
 
   yield $(".grid-product__meta").toArray().map(mapElToProduct);
