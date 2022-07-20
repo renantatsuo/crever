@@ -62,5 +62,7 @@ export const waitUser = () => {
     if (json.data?.[0] === 27) {
       process.exit(0);
     }
+
+    console.log("Resuming...\n");
   });
 };
